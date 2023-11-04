@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import icon from '../../assets/icon.png';
 import { Channel } from '../../../../utils/channel';
 import ProgressBar from '@renderer/components/ProgressBar';
+import cn from 'classnames';
 
 const Splash = () => {
   const [state, setState] = useState('Checking for updates...');
@@ -21,9 +22,8 @@ const Splash = () => {
   return (
     <>
       <img className="image" src={icon} />
-      <h4>Password Manager</h4>
-      <p className="caption">{state}</p>
-      {!!downloadProgress && <ProgressBar progress={downloadProgress} />}
+      <h4 className="caption">{state}</h4>
+      <ProgressBar className={cn('bar', !downloadProgress && 'bar_hidden')} progress={downloadProgress} />
       <p className="version">{<Version />}</p>
     </>
   );

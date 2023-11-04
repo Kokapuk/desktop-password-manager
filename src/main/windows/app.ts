@@ -1,8 +1,8 @@
 import { is } from '@electron-toolkit/utils';
 import { BrowserWindow, shell } from 'electron';
 import { join } from 'path';
-import icon from '../../resources/icon.png?asset';
-import { getDefaultSettings, setSettings } from '../utils/settings';
+import icon from '../../../resources/icon.png?asset';
+import { getDefaultSettings, setSettings } from '../../utils/settings';
 
 const createWindow = (onWindowShow: () => void) => {
   const defaultSize = getDefaultSettings().size;

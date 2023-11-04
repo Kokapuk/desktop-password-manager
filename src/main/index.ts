@@ -1,7 +1,7 @@
 import { electronApp, optimizer } from '@electron-toolkit/utils';
 import { BrowserWindow, app } from 'electron';
 import { handleIpc } from '../utils/ipc';
-import Splash from './splash';
+import Splash from './windows/splash';
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();

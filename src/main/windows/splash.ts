@@ -2,11 +2,9 @@ import { is } from '@electron-toolkit/utils';
 import { BrowserWindow, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import { join } from 'path';
-import icon from '../../resources/icon.png?asset';
-import { Channel } from '../utils/channel';
+import icon from '../../../resources/icon.png?asset';
+import { Channel } from '../../utils/channel';
 import App from './app';
-
-autoUpdater.autoRunAppAfterInstall = true;
 
 const createWindow = () => {
   let mainWindow: BrowserWindow | null = new BrowserWindow({
@@ -21,6 +19,7 @@ const createWindow = () => {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
+      devTools: is.dev,
     },
   });
 
@@ -32,14 +31,24 @@ const createWindow = () => {
 
       App.createWindow(() => {
         mainWindow?.close();
-        mainWindow = null;
+        mainWindow?.removeAllListeners();
         autoUpdater.removeAllListeners();
+        mainWindow = null;
       });
     };
 
-    if (is.dev) {
+    if (is.dev && !process.env.SPLASH_MODE) {
       return startApp();
-    } else {
+    } else if (process.env.SPLASH_MODE) {
+      return setTimeout(() => {
+        mainWindow?.webContents.send(Channel.updateState, 'Downloading updates...');
+        let percent = 0;
+
+        setInterval(() => {
+          mainWindow?.webContents.send(Channel.downloadProgress, (percent += 10));
+        }, 1000);
+      }, 1500);
+    } else if (!is.dev) {
       autoUpdater.checkForUpdates();
     }
 
