@@ -50,7 +50,9 @@ const createWindow = (onWindowShow: () => void) => {
     return { action: 'deny' };
   });
 
-  mainWindow.loadURL('https://password-mngr.web.app/login');
+  mainWindow.loadURL(
+    is.dev && process.env.LOCAL ? 'http://localhost:5173/signIn' : 'https://password-manager-iota.vercel.app/signIn'
+  );
 };
 
 export default { createWindow };
