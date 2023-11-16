@@ -1,6 +1,6 @@
 {
   "name": "password-manager",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Free and simple password storage 💙",
   "main": "./out/main/index.js",
   "author": "Kokapuk",

@@ -1,7 +1,16 @@
 import { electronApp, optimizer } from '@electron-toolkit/utils';
 import { BrowserWindow, app } from 'electron';
+import path from 'path';
 import { handleIpc } from '../utils/ipc';
 import Splash from './windows/splash';
+
+if (process.defaultApp) {
+  if (process.argv.length >= 2) {
+    app.setAsDefaultProtocolClient('password-manager', process.execPath, [path.resolve(process.argv[1])]);
+  }
+} else {
+  app.setAsDefaultProtocolClient('password-manager');
+}
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();
