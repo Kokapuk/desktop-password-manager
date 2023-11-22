@@ -2,6 +2,7 @@ import { is } from '@electron-toolkit/utils';
 import { BrowserWindow, shell } from 'electron';
 import { join } from 'path';
 import icon from '../../../resources/icon.png?asset';
+import { Channel } from '../../utils/channel';
 import { getDefaultSettings, setSettings } from '../../utils/settings';
 
 const createWindow = (onWindowShow: () => void) => {
@@ -13,13 +14,13 @@ const createWindow = (onWindowShow: () => void) => {
     minWidth: 400,
     minHeight: 400,
     show: false,
-    autoHideMenuBar: true,
+    fullscreenable: false,
     titleBarStyle: 'hidden',
-    titleBarOverlay: {
-      color: '#1e1e1e',
-      symbolColor: 'white',
-      height: 30,
-    },
+    // titleBarOverlay: {
+    //   color: '#1e1e1e',
+    //   symbolColor: 'white',
+    //   height: 30,
+    // },
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/app.js'),
@@ -39,10 +40,12 @@ const createWindow = (onWindowShow: () => void) => {
 
   mainWindow.on('maximize', () => {
     setSettings({ isMaximized: true, size: defaultSize }, mainWindow.webContents);
+    mainWindow.webContents.send(Channel.toggleMaximized, true);
   });
-
+  
   mainWindow.on('unmaximize', () => {
     setSettings({ isMaximized: false, size: mainWindow.getSize() as [number, number] }, mainWindow.webContents);
+    mainWindow.webContents.send(Channel.toggleMaximized, false);
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

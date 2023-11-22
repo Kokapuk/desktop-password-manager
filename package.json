@@ -1,10 +1,10 @@
 {
   "name": "password-manager",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Free and simple password storage 💙",
   "main": "./out/main/index.js",
   "author": "Kokapuk",
-  "homepage": "https://password-mngr.web.app",
+  "homepage": "https://password-manager-iota.vercel.app",
   "repository": {
     "type": "git",
     "url": "https://github.com/Kokapuk/desktop-password-manager.git"

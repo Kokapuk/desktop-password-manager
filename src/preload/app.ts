@@ -19,7 +19,11 @@ if (process.contextIsolated) {
   window.api = api;
 }
 
-(async () => {
+document.onreadystatechange = async () => {
+  if (document.readyState !== 'complete') {
+    return;
+  }
+
   const settings = await getSettings();
   electronAPI.ipcRenderer.send(Channel.restoreWindowState, settings);
-})();
+};
