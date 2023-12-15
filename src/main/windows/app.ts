@@ -16,11 +16,6 @@ const createWindow = (onWindowShow: () => void) => {
     show: false,
     fullscreenable: false,
     titleBarStyle: 'hidden',
-    // titleBarOverlay: {
-    //   color: '#1e1e1e',
-    //   symbolColor: 'white',
-    //   height: 30,
-    // },
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/app.js'),
@@ -54,7 +49,7 @@ const createWindow = (onWindowShow: () => void) => {
   });
 
   mainWindow.loadURL(
-    is.dev && process.env.LOCAL ? 'http://localhost:5173/signIn' : 'https://password-manager-iota.vercel.app/signIn'
+    is.dev && process.env.LOCAL ? 'http://localhost:3000/signIn' : 'https://password-manager-iota.vercel.app/signIn'
   );
 };
 

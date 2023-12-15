@@ -6,6 +6,7 @@ export const enum Channel {
   'restoreWindowState' = 'restoreWindowState',
 
   // Other
+  'getMaximized' = 'getMaximized',
   'minimize' = 'minimize',
   'toggleMaximized' = 'toggleMaximized',
   'close' = 'close',

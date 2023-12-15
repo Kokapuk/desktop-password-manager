@@ -19,6 +19,16 @@ export const handleIpc = () => {
     settings.isMaximized ? window.maximize() : window.unmaximize();
   });
 
+  ipcMain.handle(Channel.getMaximized, (event) => {
+    const window = BrowserWindow.fromWebContents(event.sender);
+
+    if (!window) {
+      return false;
+    }
+
+    return window.isMaximized();
+  });
+
   ipcMain.on(Channel.minimize, (event) => {
     const window = BrowserWindow.fromWebContents(event.sender);
 
