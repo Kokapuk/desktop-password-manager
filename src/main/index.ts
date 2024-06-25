@@ -8,7 +8,7 @@ if (process.defaultApp && !is.dev) {
   if (process.argv.length >= 2) {
     app.setAsDefaultProtocolClient('password-manager', process.execPath, [path.resolve(process.argv[1])]);
   }
-} else {
+} else if (!process.defaultApp) {
   app.setAsDefaultProtocolClient('password-manager');
 }
 

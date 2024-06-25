@@ -37,7 +37,7 @@ const createWindow = (onWindowShow: () => void) => {
     setSettings({ isMaximized: true, size: defaultSize }, mainWindow.webContents);
     mainWindow.webContents.send(Channel.toggleMaximized, true);
   });
-  
+
   mainWindow.on('unmaximize', () => {
     setSettings({ isMaximized: false, size: mainWindow.getSize() as [number, number] }, mainWindow.webContents);
     mainWindow.webContents.send(Channel.toggleMaximized, false);

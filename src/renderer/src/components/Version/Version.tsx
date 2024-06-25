@@ -10,7 +10,7 @@ const Version = () => {
     })();
   }, []);
 
-  return <>{appVersion}</>;
+  return <>{appVersion}{import.meta.env.DEV && ' DEV'}</>;
 };
 
 export default Version;
