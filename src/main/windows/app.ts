@@ -1,9 +1,11 @@
 import { is } from '@electron-toolkit/utils';
-import { BrowserWindow, shell } from 'electron';
+import { BrowserWindow, nativeImage, shell } from 'electron';
 import { join } from 'path';
 import icon from '../../../resources/icon.png?asset';
 import { Channel } from '../../utils/channel';
 import { getDefaultSettings, setSettings } from '../../utils/settings';
+
+export const canCloseApp = { value: false };
 
 const createWindow = (onWindowShow: () => void) => {
   const defaultSize = getDefaultSettings().size;
@@ -16,7 +18,12 @@ const createWindow = (onWindowShow: () => void) => {
     show: false,
     fullscreenable: false,
     titleBarStyle: 'hidden',
-    ...(process.platform === 'linux' ? { icon } : {}),
+    titleBarOverlay: {
+      color: 'rgba(0,0,0,0)',
+      symbolColor: 'white',
+      height: 32,
+    },
+    ...(process.platform === 'linux' ? { icon: nativeImage.createFromPath(icon) } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/app.js'),
       sandbox: false,
@@ -41,6 +48,13 @@ const createWindow = (onWindowShow: () => void) => {
   mainWindow.on('unmaximize', () => {
     setSettings({ isMaximized: false, size: mainWindow.getSize() as [number, number] }, mainWindow.webContents);
     mainWindow.webContents.send(Channel.toggleMaximized, false);
+  });
+
+  mainWindow.on('close', (e) => {
+    if (!canCloseApp.value) {
+      e.preventDefault();
+      mainWindow.webContents.send(Channel.requestClose);
+    }
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

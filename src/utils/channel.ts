@@ -10,4 +10,6 @@ export const enum Channel {
   'minimize' = 'minimize',
   'toggleMaximized' = 'toggleMaximized',
   'close' = 'close',
+  'requestClose' = 'requestClose',
+  'forceClose' = 'forceClose',
 }

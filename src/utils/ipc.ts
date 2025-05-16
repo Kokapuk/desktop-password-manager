@@ -1,4 +1,5 @@
 import { BrowserWindow, app, ipcMain } from 'electron';
+import { canCloseApp } from '../main/windows/app';
 import { Channel } from './channel';
 import { Settings } from './settings';
 
@@ -56,6 +57,17 @@ export const handleIpc = () => {
       return;
     }
 
+    window.close();
+  });
+
+  ipcMain.on(Channel.forceClose, (event) => {
+    const window = BrowserWindow.fromWebContents(event.sender);
+
+    if (!window) {
+      return;
+    }
+
+    canCloseApp.value = true;
     window.close();
   });
 };

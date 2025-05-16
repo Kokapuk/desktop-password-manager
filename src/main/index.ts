@@ -46,7 +46,9 @@ app.whenReady().then(() => {
   Splash.createWindow();
 
   app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) Splash.createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) {
+      Splash.createWindow();
+    }
   });
 });
 

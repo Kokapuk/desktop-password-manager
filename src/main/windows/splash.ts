@@ -1,5 +1,5 @@
 import { is } from '@electron-toolkit/utils';
-import { BrowserWindow, shell } from 'electron';
+import { BrowserWindow, nativeImage, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import { join } from 'path';
 import icon from '../../../resources/icon.png?asset';
@@ -15,7 +15,7 @@ const createWindow = () => {
     fullscreenable: false,
     titleBarStyle: 'hidden',
     darkTheme: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(process.platform === 'linux' ? { icon: nativeImage.createFromPath(icon) } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
