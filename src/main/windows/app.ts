@@ -23,6 +23,7 @@ const createWindow = (onWindowShow: () => void) => {
       symbolColor: 'white',
       height: 32,
     },
+    backgroundMaterial: 'mica',
     ...(process.platform === 'linux' ? { icon: nativeImage.createFromPath(icon) } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/app.js'),

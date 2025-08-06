@@ -1,5 +1,5 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils';
-import { BrowserWindow, app } from 'electron';
+import { BrowserWindow, app, nativeTheme } from 'electron';
 import path from 'path';
 import { handleIpc } from '../utils/ipc';
 import Splash from './windows/splash';
@@ -38,6 +38,7 @@ app.on('second-instance', () => {
 
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.Kokapuk');
+  nativeTheme.themeSource = 'dark';
 
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window);

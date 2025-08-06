@@ -14,7 +14,7 @@ const createWindow = () => {
     resizable: false,
     fullscreenable: false,
     titleBarStyle: 'hidden',
-    darkTheme: true,
+    backgroundMaterial: 'mica',
     ...(process.platform === 'linux' ? { icon: nativeImage.createFromPath(icon) } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
